@@ -63,7 +63,7 @@ spec:
           command:
             - sh
             - -c
-            - mix deps.get && mix deps.compile && mix phx.server
+            - mix phx.server
           # ▲ unUseProduction
 #          readinessProbe:
 #            httpGet:

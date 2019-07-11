@@ -1,0 +1,15 @@
+apiVersion: skaffold/v1beta12
+kind: Config
+build:
+  artifacts:
+  - image: elixir-api-1.8
+    context: server
+  - image: front-end
+    context: client
+  local:
+    push: false
+deploy:
+  kubectl:
+    manifests:
+      - infra/development/backend_end.yaml
+      - infra/development/front_end.yaml
