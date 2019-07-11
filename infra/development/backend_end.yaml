@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: local-api-svc
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+  selector:
+    app: local-api-pod
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: local-api-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: local-api-pod
+  template:
+    metadata:
+      labels:
+        app: local-api-pod
+    spec:
+      # ▼ unUseProduction
+      volumes:
+        - name: src
+          hostPath:
+            path: /Users/mike.kodama/Development/k8s-elixir/server
+            type: DirectoryOrCreate
+      # ▲ unUseProduction
+      containers:
+        - name: local-api-container
+          image: elixir-api-1.8:latest
+          # ▼ unUseProduction
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: DB_HOST
+              value: local-postgres-svc
+            - name: DB_PORT
+              value: "15432"
+            - name: DB_USER
+              value: postgres
+            - name: DB_DATEBASE
+              value: elixir_dev
+            - name: DB_PASSWORD
+              value: postgres
+            - name: PORT
+              value: "8080"
+          # ▲ unUseProduction
+          ports:
+            - containerPort: 8080
+          # ▼ unUseProduction
+          volumeMounts:
+            - mountPath: /app
+              name: src
+          workingDir: /app
+          command:
+            - sh
+            - -c
+            - mix deps.get && mix deps.compile && mix phx.server
+          # ▲ unUseProduction
+#          readinessProbe:
+#            httpGet:
+#              port: 8080
+#              path: /api/health-check
+#            timeoutSeconds: 60
