@@ -1,6 +1,6 @@
-FROM elixir:1.8
+FROM elixir:1.6-otp-21
 
-ENV NODE_VERSION 11
+ENV NODE_VERSION 10
 ENV PHOENIX_VERSION 1.4.9
 
 RUN apt-get update \
@@ -10,7 +10,9 @@ RUN apt-get update \
     && n stable \
     && npm update -g npm \
     && mix local.hex --force \
-    && mix archive.install --force hex phx_new ${PHOENIX_VERSION} \
+    #&& mix archive.install --force hex phx_new ${PHOENIX_VERSION} \
+    # Version 1.3.x
+    && mix archive.install --force https://github.com/phoenixframework/archives/raw/master/phx_new.ez \
     && mix local.rebar --force
 
 WORKDIR /app

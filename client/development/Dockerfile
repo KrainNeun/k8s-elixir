@@ -1,10 +1,9 @@
-FROM node:10.14.2-alpine AS build
+FROM k8s-nodejs-10.16:latest
 
-WORKDIR .
+WORKDIR /client
 COPY . .
 #RUN npm install && \
 #npm run build
-
 
 FROM nginx:1.16.0-alpine
 

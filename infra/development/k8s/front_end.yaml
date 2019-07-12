@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
         - name: local-front-container
-          image: nginx:1.16.0-alpine
+          image: k8s-front-end-image:latest
           # ▼ unUseProduction
           imagePullPolicy: IfNotPresent
           # ▲ unUseProduction

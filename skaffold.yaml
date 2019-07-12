@@ -2,14 +2,25 @@ apiVersion: skaffold/v1beta12
 kind: Config
 build:
   artifacts:
-  - image: elixir-api-1.8
+  - image: k8s-back-end-image
     context: server
-  - image: front-end
+    docker:
+      dockerfile: development/Dockerfile
+      buildArgs:
+        DB_HOST: local-postgres-svc
+        DB_PORT: "15432"
+        DB_USER: postgres
+        DB_DATEBASE: elixir_dev
+        DB_PASSWORD: postgres
+        PORT: "8080"
+  - image: k8s-front-end-image
     context: client
+    docker:
+      dockerfile: development/Dockerfile
   local:
     push: false
 deploy:
   kubectl:
     manifests:
-      - infra/development/backend_end.yaml
-      - infra/development/front_end.yaml
+      - infra/development/k8s/front_end.yaml
+      - infra/development/k8s/backend_end.yaml

@@ -14,7 +14,7 @@ defmodule AppExWeb.Router do
   end
 
   scope "/", AppExWeb do
-    pipe_through :browser
+    pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
   end

@@ -36,34 +36,34 @@ spec:
       # ▲ unUseProduction
       containers:
         - name: local-api-container
-          image: elixir-api-1.8:latest
+          image: k8s-back-end-image:latest
           # ▼ unUseProduction
           imagePullPolicy: IfNotPresent
-          env:
-            - name: DB_HOST
-              value: local-postgres-svc
-            - name: DB_PORT
-              value: "15432"
-            - name: DB_USER
-              value: postgres
-            - name: DB_DATEBASE
-              value: elixir_dev
-            - name: DB_PASSWORD
-              value: postgres
-            - name: PORT
-              value: "8080"
+#          env:
+#            - name: DB_HOST
+#              value: local-postgres-svc
+#            - name: DB_PORT
+#              value: "15432"
+#            - name: DB_USER
+#              value: postgres
+#            - name: DB_DATEBASE
+#              value: elixir_dev
+#            - name: DB_PASSWORD
+#              value: postgres
+#            - name: PORT
+#              value: "8080"
           # ▲ unUseProduction
           ports:
             - containerPort: 8080
           # ▼ unUseProduction
-          volumeMounts:
-            - mountPath: /app
-              name: src
+#          volumeMounts:
+#            - mountPath: /app
+#              name: src
           workingDir: /app
           command:
             - sh
             - -c
-            - mix phx.server
+            - "iex -S mix phx.server"
           # ▲ unUseProduction
 #          readinessProbe:
 #            httpGet:
