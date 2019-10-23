@@ -44,8 +44,8 @@ defmodule AppEx.Mixfile do
       {:cors_plug, "~> 1.5"},
       {:plug_cowboy, "~> 1.0"},
       {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false}, # add
-      {:dialyxir, "~> 0.5.1", only: [:dev, :test], runtime: false}, # add
       {:ex_doc, ">= 0.0.0", only: :test, runtime: false},
+      {:prometheus, "~> 4.4"},
     ]
   end
 

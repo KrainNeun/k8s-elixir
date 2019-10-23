@@ -27,43 +27,38 @@ spec:
       labels:
         app: local-api-pod
     spec:
-      # ▼ unUseProduction
       volumes:
         - name: src
           hostPath:
-            path: /Users/mike.kodama/Development/k8s-elixir/server
+            path: /Users/krainneun/Development/OSS/k8s-elixir/server
             type: DirectoryOrCreate
-      # ▲ unUseProduction
       containers:
         - name: local-api-container
-          image: k8s-back-end-image:latest
-          # ▼ unUseProduction
+          image: k8s-back-end-image
           imagePullPolicy: IfNotPresent
-#          env:
-#            - name: DB_HOST
-#              value: local-postgres-svc
-#            - name: DB_PORT
-#              value: "15432"
-#            - name: DB_USER
-#              value: postgres
-#            - name: DB_DATEBASE
-#              value: elixir_dev
-#            - name: DB_PASSWORD
-#              value: postgres
-#            - name: PORT
-#              value: "8080"
-          # ▲ unUseProduction
+          env:
+            - name: DB_HOST
+              value: local-postgres-svc
+            - name: DB_PORT
+              value: "15432"
+            - name: DB_USER
+              value: postgres
+            - name: DB_DATEBASE
+              value: share_truck_dev
+            - name: DB_PASSWORD
+              value: postgres
+            - name: PORT
+              value: "8080"
           ports:
             - containerPort: 8080
-          # ▼ unUseProduction
-#          volumeMounts:
-#            - mountPath: /app
-#              name: src
+          volumeMounts:
+            - mountPath: /app
+              name: src
           workingDir: /app
           command:
             - sh
             - -c
-            - "iex -S mix phx.server"
+            - "mix deps.get && mix ecto.create && mix phx.server"
           # ▲ unUseProduction
 #          readinessProbe:
 #            httpGet:

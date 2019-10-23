@@ -3,52 +3,17 @@ kind: Ingress
 metadata:
   name: local-ingress
   annotations:
-    # ▼ unUseProduction
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    # ▲ unUseProduction
-#    kubernetes.io/ingress.global-static-ip-name: local-api-ip
-#    ingress.gcp.kubernetes.io/pre-shared-cert: local-ssl
+    kubernetes.io/ingress.class: nginx
 spec:
   rules:
     - host: localhost
       http:
         paths:
-          - path: /*
+          - path: /
             backend:
               serviceName: local-front-svc
               servicePort: 80
-#          - path: /api/*
-#            backend:
-#              serviceName: local-api-svc
-#              servicePort: 80
-    # ▼ unUseProduction
-    - host: api.localhost
-      http:
-        paths:
-          - path: /*(/|$)(.*)
+          - path: /elixir/
             backend:
               serviceName: local-api-svc
               servicePort: 80
-    - host: open.api.localhost
-      http:
-        paths:
-            - path: /*(/|$)(.*)
-              backend:
-                serviceName: swagger-api-svc
-                servicePort: 80
-    - host: open.editor.localhost
-      http:
-        paths:
-            - path: /*(/|$)(.*)
-              backend:
-                serviceName: swagger-editor-svc
-                servicePort: 80
-    - host: open.ui.localhost
-      http:
-        paths:
-          - path: /*(/|$)(.*)
-            backend:
-              serviceName: swagger-ui-svc
-              servicePort: 80
-    # ▲ unUseProduction

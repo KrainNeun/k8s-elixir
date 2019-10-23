@@ -6,19 +6,13 @@ build:
     context: server
     docker:
       dockerfile: development/Dockerfile
-      buildArgs:
-        DB_HOST: local-postgres-svc
-        DB_PORT: "15432"
-        DB_USER: postgres
-        DB_DATEBASE: elixir_dev
-        DB_PASSWORD: postgres
-        PORT: "8080"
   - image: k8s-front-end-image
     context: client
     docker:
       dockerfile: development/Dockerfile
   local:
     push: false
+    useBuildkit: true
 deploy:
   kubectl:
     manifests:

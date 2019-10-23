@@ -13,7 +13,7 @@ defmodule AppExWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", AppExWeb do
+  scope "/elixir", AppExWeb do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
